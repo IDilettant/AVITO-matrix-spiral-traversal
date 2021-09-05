@@ -8,7 +8,7 @@ import logging
 from typing import List
 
 from aiohttp import ClientError, ClientSession
-from exceptions import FormatMatrixExceptions, GetMatrixException
+from mattrav.exceptions import FormatMatrixExceptions, GetMatrixException
 
 
 async def get_matrix(url: str, raise_on_error: bool = False) -> List[int]:
