@@ -113,8 +113,8 @@ def _is_right_format(matrix: str) -> bool:  # noqa: WPS210
         |  30 |  40 |
         +-----+-----+
     """
-    checks = []
     if isinstance(matrix, str) and matrix:
+        checks = []
         matrix_lines = matrix.strip().split('\n')
         upper_borderline = matrix_lines[0]
         size = len([char for char in upper_borderline.split('+') if char != ''])
@@ -131,6 +131,5 @@ def _is_right_format(matrix: str) -> bool:  # noqa: WPS210
                         ],
                     ) == size,
                 )
-    else:
-        checks.append(False)
-    return all(checks)
+        return all(checks)
+    return False
