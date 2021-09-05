@@ -25,12 +25,17 @@ pip install git+https://github.com/IDilettant/AVITO-matrix-spiral-traversal.git
 
 ## Usage
 ```python
+import asyncio
+
 from mattrav import get_matrix
 
-traversal_result = get_matrix(server_url)
+traversal_result = asyncio.run(get_matrix(server_url))
 ```
 
 ## Usage examples
 
 ### Installation
 [![asciicast](https://asciinema.org/a/azGIm60fP78u9tVAQ4ukl5j0i.svg)](https://asciinema.org/a/azGIm60fP78u9tVAQ4ukl5j0i)
+
+### Import and running
+[![asciicast](https://asciinema.org/a/qCWX7w3shiA9Mv5BtcLwbMbtp.svg)](https://asciinema.org/a/qCWX7w3shiA9Mv5BtcLwbMbtp)
