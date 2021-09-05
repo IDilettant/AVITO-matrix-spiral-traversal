@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["idilettant <dedenev1985@gmail.com>"]
 packages = [
-  { include = "spiral_traversal" },
+  { include = "mattrav" },
 ]
 
 

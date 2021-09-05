@@ -1,7 +1,7 @@
 from typing import List
 
 import pytest
-from spiral_traversal.solution import (
+from mattrav.matrix_traversal import (
     _is_right_format,
     download_matrix,
     format_matrix,

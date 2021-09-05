@@ -1,5 +1,5 @@
 """Library package module."""
-from spiral_traversal.solution import (
+from mattrav.matrix_traversal import (
     download_matrix,
     format_matrix,
     get_matrix,

@@ -41,7 +41,7 @@ def source_matrix_3_size() -> List[List[int]]:
 
 @pytest.fixture
 def traversal_4_size() -> List[int]:
-    """Result of spiral_traversal traversal of matrix."""
+    """Result of mattrav traversal of matrix."""
     return [
         10, 50, 90, 130,
         140, 150, 160, 120,
@@ -52,7 +52,7 @@ def traversal_4_size() -> List[int]:
 
 @pytest.fixture
 def traversal_3_size() -> List[int]:
-    """Result of spiral_traversal traversal of matrix."""
+    """Result of mattrav traversal of matrix."""
     return [
         10, 40, 70,
         80, 90, 60,
