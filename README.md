@@ -31,3 +31,6 @@ traversal_result = get_matrix(server_url)
 ```
 
 ## Usage examples
+
+### Installation
+[![asciicast](https://asciinema.org/a/azGIm60fP78u9tVAQ4ukl5j0i.svg)](https://asciinema.org/a/azGIm60fP78u9tVAQ4ukl5j0i)
