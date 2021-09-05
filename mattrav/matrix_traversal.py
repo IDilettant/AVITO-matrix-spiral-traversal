@@ -59,7 +59,7 @@ async def download_matrix(url: str) -> str:
 def traverse_matrix(source_matrix: List[List[int]]) -> List[int]:
     """Collect matrix values.
 
-    Traverse in a mattrav counterclockwise,
+    Traverse in a spiral counterclockwise,
     starting from the upper left corner
 
     Args:
