@@ -51,9 +51,8 @@ async def download_matrix(url: str) -> str:
     Returns:
         graphic matrix
     """
-    async with ClientSession(raise_for_status=True) as session:
-        async with session.get(url) as resp:
-            return await resp.text()
+    async with ClientSession(raise_for_status=True) as session, session.get(url) as resp:
+        return await resp.text()
 
 
 def traverse_matrix(source_matrix: List[List[int]]) -> List[int]:
