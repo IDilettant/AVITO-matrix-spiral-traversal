@@ -42,24 +42,17 @@ SOURCE_URL = 'https://raw.githubusercontent.com/avito-tech/python-trainee-assign
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    'matrix, traversal',
+    'status_code, matrix, traversal',
     [
-        (GRAPHIC_MATRIX_4_SIZE, TRAVERSAL_4_SIZE),
-        (GRAPHIC_MATRIX_3_SIZE, TRAVERSAL_3_SIZE),
+        (200, GRAPHIC_MATRIX_4_SIZE, TRAVERSAL_4_SIZE),
+        (200, GRAPHIC_MATRIX_3_SIZE, TRAVERSAL_3_SIZE),
     ],
 )
-async def test_get_matrix(matrix, traversal):
+async def test_get_matrix(status_code, matrix, traversal):
     with pook.use(network=True):
         pook.get(
             SOURCE_URL,
-            reply=200,
-            response_json=matrix,
-        )
-        assert await get_matrix(SOURCE_URL) == traversal
-
-        pook.get(
-            SOURCE_URL,
-            reply=200,
+            reply=status_code,
             response_json=matrix,
         )
         assert await get_matrix(SOURCE_URL) == traversal
@@ -67,41 +60,20 @@ async def test_get_matrix(matrix, traversal):
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    'status_code, exception',
+    'status_code, matrix, exception',
     [
-        (200, FormatMatrixExceptions),
-        (204, FormatMatrixExceptions),
-        (400, GetMatrixException),
-        (500, GetMatrixException),
+        (200, GRAPHIC_MATRIX_WRONG, FormatMatrixExceptions),
+        (204, '', FormatMatrixExceptions),
+        (400, '', GetMatrixException),
+        (500, '', GetMatrixException),
     ],
 )
-async def test_get_matrix_format_exc(status_code, exception):
+async def test_get_matrix_exc(status_code, matrix, exception):
     with pook.use(network=True):
         pook.get(
             SOURCE_URL,
             reply=status_code,
-            response_json=GRAPHIC_MATRIX_WRONG,
-        )
-        with pytest.raises(exception):
-            await get_matrix(SOURCE_URL, raise_on_error=True)
-
-        pook.get(
-            SOURCE_URL,
-            reply=status_code,
-        )
-        with pytest.raises(exception):
-            await get_matrix(SOURCE_URL, raise_on_error=True)
-
-        pook.get(
-            SOURCE_URL,
-            reply=status_code,
-        )
-        with pytest.raises(exception):
-            await get_matrix(SOURCE_URL, raise_on_error=True)
-
-        pook.get(
-            SOURCE_URL,
-            reply=status_code,
+            response_json=matrix,
         )
         with pytest.raises(exception):
             await get_matrix(SOURCE_URL, raise_on_error=True)
