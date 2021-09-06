@@ -1,13 +1,13 @@
 """Library package module."""
 from mattrav.matrix_traversal import (
     download_matrix,
-    format_matrix,
     get_matrix,
+    parse_matrix,
     traverse_matrix,
 )
 
 __all__ = (  # noqa: WPS410
-    'format_matrix',
+    'parse_matrix',
     'traverse_matrix',
     'get_matrix',
     'download_matrix',
