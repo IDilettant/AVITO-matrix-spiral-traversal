@@ -20,7 +20,7 @@ mypy-check:
 	poetry run mypy --namespace-packages tests mattrav
 
 pre-commit:
-	poetry run pre-commit run mattrav
+	poetry run pre-commit run --all-files
 
 
 .PHONY: test, isort, coverage

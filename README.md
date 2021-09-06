@@ -7,8 +7,8 @@
 
 
 ## Description
-Mattrav (MATrix TRAVersal) is a library that provides functionality that allows to download 
-and process square matrices of a certain format by traversing their values in a spiral: 
+Mattrav (MATrix TRAVersal) is a library that provides functionality that allows to download
+and process square matrices of a certain format by traversing their values in a spiral:
 counterclockwise, starting from the upper left corner
 
 The library was implemented in accordance with the test assignment for an internship as a back-end developer from Avito

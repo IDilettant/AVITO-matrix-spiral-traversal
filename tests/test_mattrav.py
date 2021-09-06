@@ -1,3 +1,4 @@
+"""Main tests."""
 import pook
 import pytest
 from mattrav.exceptions import FormatMatrixExceptions, GetMatrixException
@@ -26,15 +27,15 @@ GRAPHIC_MATRIX_WRONG = """|-----|-----|-----|
 |-----|-----|-----|
 """
 TRAVERSAL_4_SIZE = [
-        10, 50, 90, 130,
-        140, 150, 160, 120,
-        80, 40, 30, 20,
-        60, 100, 110, 70,
+    10, 50, 90, 130,
+    140, 150, 160, 120,
+    80, 40, 30, 20,
+    60, 100, 110, 70,
 ]
 TRAVERSAL_3_SIZE = [
-        10, 40, 70,
-        80, 90, 60,
-        30, 20, 50,
+    10, 40, 70,
+    80, 90, 60,
+    30, 20, 50,
 ]
 SOURCE_URL = 'https://raw.githubusercontent.com/avito-tech/python-trainee-assignment/main/matrix.txt'
 
