@@ -41,51 +41,67 @@ SOURCE_URL = 'https://raw.githubusercontent.com/avito-tech/python-trainee-assign
 
 
 @pytest.mark.asyncio
-async def test_get_matrix():
+@pytest.mark.parametrize(
+    'matrix, traversal',
+    [
+        (GRAPHIC_MATRIX_4_SIZE, TRAVERSAL_4_SIZE),
+        (GRAPHIC_MATRIX_3_SIZE, TRAVERSAL_3_SIZE),
+    ],
+)
+async def test_get_matrix(matrix, traversal):
     with pook.use(network=True):
         pook.get(
             SOURCE_URL,
             reply=200,
-            response_json=GRAPHIC_MATRIX_4_SIZE,
+            response_json=matrix,
         )
-        assert await get_matrix(SOURCE_URL) == TRAVERSAL_4_SIZE
+        assert await get_matrix(SOURCE_URL) == traversal
 
         pook.get(
             SOURCE_URL,
             reply=200,
-            response_json=GRAPHIC_MATRIX_3_SIZE,
+            response_json=matrix,
         )
-        assert await get_matrix(SOURCE_URL) == TRAVERSAL_3_SIZE
+        assert await get_matrix(SOURCE_URL) == traversal
 
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    'status_code, exception',
+    [
+        (200, FormatMatrixExceptions),
+        (204, FormatMatrixExceptions),
+        (400, GetMatrixException),
+        (500, GetMatrixException),
+    ],
+)
+async def test_get_matrix_format_exc(status_code, exception):
+    with pook.use(network=True):
         pook.get(
             SOURCE_URL,
-            reply=200,
+            reply=status_code,
             response_json=GRAPHIC_MATRIX_WRONG,
         )
-        with pytest.raises(FormatMatrixExceptions) as exc:
+        with pytest.raises(exception):
             await get_matrix(SOURCE_URL, raise_on_error=True)
-        assert str(exc.value) == 'Unexpected matrix format'
 
         pook.get(
             SOURCE_URL,
-            reply=204,
+            reply=status_code,
         )
-        with pytest.raises(FormatMatrixExceptions) as exc:
+        with pytest.raises(exception):
             await get_matrix(SOURCE_URL, raise_on_error=True)
-        assert str(exc.value) == 'Unexpected matrix format'
 
         pook.get(
             SOURCE_URL,
-            reply=400,
+            reply=status_code,
         )
-        with pytest.raises(GetMatrixException) as exception:
+        with pytest.raises(exception):
             await get_matrix(SOURCE_URL, raise_on_error=True)
-        assert str(exception.value) == "Download can't be finished"
 
         pook.get(
             SOURCE_URL,
-            reply=500,
+            reply=status_code,
         )
-        with pytest.raises(GetMatrixException) as exception:
+        with pytest.raises(exception):
             await get_matrix(SOURCE_URL, raise_on_error=True)
-        assert str(exception.value) == "Download can't be finished"
