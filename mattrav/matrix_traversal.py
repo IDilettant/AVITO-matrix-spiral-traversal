@@ -10,6 +10,8 @@ from typing import List
 from aiohttp import ClientError, ClientSession
 from mattrav.exceptions import FormatMatrixExceptions, GetMatrixException
 
+LOGGER = logging.getLogger(__name__)
+
 
 async def get_matrix(url: str, raise_on_error: bool = False) -> List[int]:
     """Get the result of traversing a matrix downloaded from a remote server.
@@ -23,22 +25,20 @@ async def get_matrix(url: str, raise_on_error: bool = False) -> List[int]:
 
     Raises:
         GetMatrixException: exception of network access
-        FormatMatrixExceptions: exception of matrix source format
     """
-    logger = logging.getLogger(__name__)
-    try:
+    try:  # noqa: WPS229
         graphic_matrix = await download_matrix(url)
+        matrix = format_matrix(graphic_matrix)
     except ClientError as exc:
         if raise_on_error:
             raise GetMatrixException("Download can't be finished") from exc
-        logger.warning(exc)
+        LOGGER.warning(exc)
         return []
-    if not _is_right_format(graphic_matrix):
+    except FormatMatrixExceptions as exc:
         if raise_on_error:
-            raise FormatMatrixExceptions('Unexpected matrix format')
-        logger.warning(FormatMatrixExceptions('Unexpected matrix format'))
+            raise
+        LOGGER.warning(exc)
         return []
-    matrix = format_matrix(graphic_matrix)
     return traverse_matrix(matrix)
 
 
@@ -51,8 +51,9 @@ async def download_matrix(url: str) -> str:
     Returns:
         graphic matrix
     """
-    async with ClientSession(raise_for_status=True) as session:
+    async with ClientSession() as session:
         async with session.get(url) as resp:
+            resp.raise_for_status()
             return await resp.text()
 
 
@@ -76,7 +77,7 @@ def traverse_matrix(source_matrix: List[List[int]]) -> List[int]:
     return traverse
 
 
-def format_matrix(graphic_matrix: str) -> List[List[int]]:
+def format_matrix(graphic_matrix: str) -> List[List[int]]:  # noqa: WPS210
     """Format graphical representation of the matrix to list.
 
     Args:
@@ -84,52 +85,23 @@ def format_matrix(graphic_matrix: str) -> List[List[int]]:
 
     Returns:
         the matrix in list format
+
+    Raises:
+        FormatMatrixExceptions: exception of matrix source format
     """
-    matrix_lines = graphic_matrix.split('\n')
-    return [
-        [
-            int(char)
-            for char in line.split(' ')
-            if char.isdigit()
-        ]
-        for index, line in enumerate(matrix_lines)
-        if index % 2 == 1 and line
-    ]
-
-
-def _is_right_format(matrix: str) -> bool:  # noqa: WPS210
-    """Check the matrix format for compliance with the expected.
-
-    Args:
-        matrix: graphical representation of the matrix
-
-    Returns:
-        bool
-
-    Expected format example:
-        +-----+-----+
-        |  10 |  20 |
-        +-----+-----+
-        |  30 |  40 |
-        +-----+-----+
-    """
-    if isinstance(matrix, str) and matrix:
-        checks = []
-        matrix_lines = matrix.strip().split('\n')
+    if isinstance(graphic_matrix, str) and graphic_matrix:
+        matrix_lines = graphic_matrix.split('\n')
         upper_borderline = matrix_lines[0]
         size = len([char for char in upper_borderline.split('+') if char != ''])
-        for index, line in enumerate(matrix_lines):
-            if index % 2 == 0:
-                checks.append(line == upper_borderline)
-            if index % 2 == 1:
-                checks.append(
-                    len(
-                        [
-                            int(char)
-                            for char in line.split(' ')
-                            if char.isdigit()
-                        ],
-                    ) == size,
-                )
-        return all(checks)
-    return False
+        matrix = [
+            [
+                int(char)
+                for char in line.split(' ')
+                if char.isdigit()
+            ]
+            for index, line in enumerate(matrix_lines)
+            if index % 2 == 1 and line
+        ]
+        if list(filter(lambda line: len(line) == size, matrix)):
+            return matrix
+    raise FormatMatrixExceptions('Unexpected matrix format')
