@@ -20,7 +20,7 @@ mypy-check:
 	poetry run mypy --namespace-packages tests mattrav
 
 pre-commit:
-	poetry run pre-commit run --all-files
+	poetry run pre-commit run mattrav/matrix_traversal.py
 
 
 .PHONY: test, isort, coverage
