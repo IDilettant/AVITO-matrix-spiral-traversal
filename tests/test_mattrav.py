@@ -49,7 +49,7 @@ SOURCE_URL = 'https://raw.githubusercontent.com/avito-tech/python-trainee-assign
     ],
 )
 async def test_get_matrix(status_code, matrix, traversal):
-    with pook.use(network=True):
+    with pook.use():
         pook.get(
             SOURCE_URL,
             reply=status_code,
@@ -69,7 +69,7 @@ async def test_get_matrix(status_code, matrix, traversal):
     ],
 )
 async def test_get_matrix_exc(status_code, matrix, exception):
-    with pook.use(network=True):
+    with pook.use():
         pook.get(
             SOURCE_URL,
             reply=status_code,
