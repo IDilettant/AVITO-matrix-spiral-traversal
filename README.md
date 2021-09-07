@@ -11,12 +11,12 @@ Mattrav (MATrix TRAVersal) is a library that provides functionality that allows 
 and process square matrices of a certain format by traversing their values in a spiral:
 counterclockwise, starting from the upper left corner
 
-The library was implemented in accordance with the test assignment for an internship as a back-end developer from Avito
+The library was implemented in accordance with the test assignment for the Avito internship as a back-end developer
 
 ## Features
 - Getting matrix from a remote server and providing it in text representation
 - Formatting graphical representation of the downloaded matrix to list of lists
-- Collecting matrix values traversing in a spiral
+- Collecting the matrix values by traversing it in a spiral
 
 ## Installation
 ```bash
