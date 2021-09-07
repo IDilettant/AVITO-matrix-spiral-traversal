@@ -1,8 +1,7 @@
 """Matrix spiral traversal library.
 
-Get a square matrix from a remote server and return the result of
-traversing the matrix in a spiral traverse: counterclockwise, starting from
-the upper left corner
+Get a square matrix from a remote server and return the result of spiral
+traversal of the matrix: counterclockwise, starting from the upper left corner
 """
 import logging
 from typing import List
@@ -14,21 +13,21 @@ LOGGER = logging.getLogger(__name__)
 
 
 async def get_matrix(url: str, raise_on_error: bool = False) -> List[int]:
-    """Get the result of traversing a matrix downloaded from a remote server.
+    """Get result of traversal of the matrix downloaded from a remote server.
 
     Args:
         url: remote server url
-        raise_on_error: flag of raising exception of network access
+        raise_on_error: flag of exceptions raise of network access
 
     Returns:
-        the matrix traversing result
+        result of the matrix traversal
 
     Raises:
         GetMatrixException: exception of network access
     """
     try:  # noqa: WPS229
-        graphic_matrix = await download_matrix(url)
-        matrix = parse_matrix(graphic_matrix)
+        graphical_matrix = await download_matrix(url)
+        matrix = parse_matrix(graphical_matrix)
     except ClientError as exc:
         if raise_on_error:
             raise GetMatrixException("Download can't be finished") from exc
@@ -67,7 +66,7 @@ def traverse_matrix(source_matrix: List[List[int]]) -> List[int]:
         source_matrix: the matrix in list format
 
     Returns:
-        result of matrix traverse
+        result of the matrix traversal
     """
     traverse: List[int] = []
     matrix = list(zip(*source_matrix))
@@ -77,11 +76,11 @@ def traverse_matrix(source_matrix: List[List[int]]) -> List[int]:
     return traverse
 
 
-def parse_matrix(graphic_matrix: str) -> List[List[int]]:  # noqa: WPS210
+def parse_matrix(graphical_matrix: str) -> List[List[int]]:  # noqa: WPS210
     """Parse graphical matrix values.
 
     Args:
-        graphic_matrix: graphical representation of the matrix
+        graphical_matrix: graphical representation of the matrix
 
     Returns:
         the matrix in list format
@@ -89,9 +88,9 @@ def parse_matrix(graphic_matrix: str) -> List[List[int]]:  # noqa: WPS210
     Raises:
         FormatMatrixExceptions: exception of matrix source format
     """
-    if not graphic_matrix:
+    if not graphical_matrix:
         raise FormatMatrixExceptions('Unexpected matrix format')
-    matrix_lines = graphic_matrix.split('\n')
+    matrix_lines = graphical_matrix.split('\n')
     upper_borderline = matrix_lines[0]
     size = len([char for char in upper_borderline.split('+') if char != ''])
     matrix = [

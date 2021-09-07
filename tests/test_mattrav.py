@@ -4,7 +4,7 @@ import pytest
 from mattrav.exceptions import FormatMatrixExceptions, GetMatrixException
 from mattrav.matrix_traversal import get_matrix
 
-GRAPHIC_MATRIX_4_SIZE = """+-----+-----+-----+-----+
+GRAPHICAL_MATRIX_4_SIZE = """+-----+-----+-----+-----+
 |  10 |  20 |  30 |  40 |
 +-----+-----+-----+-----+
 |  50 |  60 |  70 |  80 |
@@ -14,7 +14,7 @@ GRAPHIC_MATRIX_4_SIZE = """+-----+-----+-----+-----+
 | 130 | 140 | 150 | 160 |
 +-----+-----+-----+-----+
 """
-GRAPHIC_MATRIX_3_SIZE = """+-----+-----+-----+
+GRAPHICAL_MATRIX_3_SIZE = """+-----+-----+-----+
 |  10 |  20 |  30 |
 +-----+-----+-----+
 |  40 |  50 |  60 |
@@ -22,7 +22,7 @@ GRAPHIC_MATRIX_3_SIZE = """+-----+-----+-----+
 |  70 |  80 |  90 |
 +-----+-----+-----+
 """
-GRAPHIC_MATRIX_WRONG = """|-----|-----|-----|
+GRAPHICAL_MATRIX_WRONG = """|-----|-----|-----|
 |  10 |  20 |  30 |
 |-----|-----|-----|
 """
@@ -44,8 +44,8 @@ SOURCE_URL = 'https://raw.githubusercontent.com/avito-tech/python-trainee-assign
 @pytest.mark.parametrize(
     'status_code, matrix, traversal',
     [
-        (200, GRAPHIC_MATRIX_4_SIZE, TRAVERSAL_4_SIZE),
-        (200, GRAPHIC_MATRIX_3_SIZE, TRAVERSAL_3_SIZE),
+        (200, GRAPHICAL_MATRIX_4_SIZE, TRAVERSAL_4_SIZE),
+        (200, GRAPHICAL_MATRIX_3_SIZE, TRAVERSAL_3_SIZE),
     ],
 )
 async def test_get_matrix(status_code, matrix, traversal):
@@ -62,7 +62,7 @@ async def test_get_matrix(status_code, matrix, traversal):
 @pytest.mark.parametrize(
     'status_code, matrix, exception',
     [
-        (200, GRAPHIC_MATRIX_WRONG, FormatMatrixExceptions),
+        (200, GRAPHICAL_MATRIX_WRONG, FormatMatrixExceptions),
         (204, '', FormatMatrixExceptions),
         (400, '', GetMatrixException),
         (500, '', GetMatrixException),
