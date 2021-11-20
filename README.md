@@ -20,7 +20,7 @@ The library was implemented in accordance with the test assignment for the Avito
 
 ## Installation
 ```bash
-pip install git+https://github.com/IDilettant/avito-matrix-spiral-traversal.git
+python3 -m pip install git+https://github.com/IDilettant/avito-matrix-spiral-traversal.git
 ```
 
 ## Usage
